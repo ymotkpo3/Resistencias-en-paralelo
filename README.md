@@ -1,0 +1,1 @@
+# Resistencias-en-paralelo
