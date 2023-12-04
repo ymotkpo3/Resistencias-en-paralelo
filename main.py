@@ -1,43 +1,42 @@
 import sys
 
-print("Hola, esta es LA CALCULADORA DE RESISTENCIAS EN PARALELO!! XD")
 
-res = []
-
-div1 = []
-
-suma = 0.0
-
-if input("desea comenzar? [S] [N]: ") == "S":
-    pregunta = input(
-        "desea ingresar un valor[numero] o no desea poner nada[N]?: ")
-
-    if pregunta == "N":
-        sys.exit("se termino la ejecucion del programa")
-    else:
-        res.append(float(pregunta))
-
-    while pregunta != "N":
-        repregunta = input(
-            "desea ingresar otro valor[numero] o no desea poner nada mas[N]?: "
-        )
-        if repregunta == "N":
+def obtener_resistencias():
+    resistencias = []
+    while True:
+        valor = input("Ingrese un valor de resistencia (o 'N' para terminar): ")
+        if valor.upper() == 'N':
             break
-        res.append(float(repregunta))
+        try:
+            resistencia = float(valor)
+            resistencias.append(resistencia)
+        except ValueError:
+            print("Por favor, ingrese un número válido.")
+    return resistencias
 
-    if pregunta == "N":
-        sys.exit("se termino la ejecucion del programa")
 
-    print("dividiendo 1 por cada valor")
+def calcular_resistencia_total(resistencias):
+    if not resistencias:
+        sys.exit("No se ingresaron resistencias. Terminando programa.")
 
-    for val in res:
-        div1.append(1 / val)
+    resistencias_inversas = [1 / r for r in resistencias]
+    resistencia_total = 1 / sum(resistencias_inversas)
 
-    print("sumando valores")
+    return resistencia_total
 
-    for value in div1:
-        suma += value
 
-    resultado = 1 / suma
+def main():
+    print("¡Bienvenido a la CALCULADORA DE RESISTENCIAS EN PARALELO!")
 
-    print("La resistencia total es de " + str(resultado) + " ohms")
+    if input("¿Desea comenzar? [S] [N]: ").upper() != "S":
+        sys.exit("Se terminó la ejecución del programa.")
+
+    resistencias = obtener_resistencias()
+
+    resistencia_total = calcular_resistencia_total(resistencias)
+
+    print(f"La resistencia total es de {resistencia_total:.2f} ohms")
+
+
+if __name__ == "__main__":
+    main()
